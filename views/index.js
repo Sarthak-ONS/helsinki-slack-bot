@@ -1,7 +1,9 @@
-import CreateGithubRepoView from "./createGithubRepository.json";
-import ErrorView from "./error.json";
+const CreateGithubRepoView = require("./createGithubRepository.json");
+const ErrorView = require("./error.json");
+const AppHomeView = require("./appHome.json");
 
 module.exports = {
   CreateGithubRepoView,
   ErrorView,
+  AppHomeView,
 };

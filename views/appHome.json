@@ -1,0 +1,22 @@
+{
+    "type": "home",
+    "blocks": [
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "Please add your Personal Access Token (PAT) token from github to properly configure *Helsinki*"
+            },
+            "accessory": {
+                "type": "button",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Add Token",
+                    "emoji": true
+                },
+                "value": "click_me_123",
+                "action_id": "add_token_to_db"
+            }
+        }
+    ]
+}
