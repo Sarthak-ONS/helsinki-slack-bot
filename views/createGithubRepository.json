@@ -1,0 +1,75 @@
+{
+    "type": "modal",
+    "title": {
+        "type": "plain_text",
+        "text": "Create Github Repository"
+    },
+    "blocks": [
+        {
+            "type": "input",
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "repo_name",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "Name of the repository"
+                }
+            },
+            "label": {
+                "type": "plain_text",
+                "text": "Name"
+            },
+            "hint": {
+                "type": "plain_text",
+                "text": "Hint text"
+            }
+        },
+        {
+            "type": "input",
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "repo_description",
+                "multiline": true,
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "Description of repository"
+                }
+            },
+            "label": {
+                "type": "plain_text",
+                "text": "Description"
+            }
+        },
+        {
+            "type": "input",
+            "element": {
+                "type": "radio_buttons",
+                "action_id": "repo_type",
+                "options": [
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Private"
+                        },
+                        "value": "private"
+                    },
+                    {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Public"
+                        },
+                        "value": "public"
+                    }
+                ]
+            },
+            "label": {
+                "type": "plain_text",
+                "text": "Repository Type"
+            }
+        }
+    ],
+    "submit": {
+        "type": "plain_text",
+        "text": "Create"
+    }
+}
