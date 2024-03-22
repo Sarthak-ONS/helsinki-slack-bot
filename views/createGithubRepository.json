@@ -4,6 +4,7 @@
         "type": "plain_text",
         "text": "Create Github Repository"
     },
+    "callback_id": "create_github_repo",
     "blocks": [
         {
             "type": "input",

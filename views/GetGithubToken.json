@@ -1,0 +1,29 @@
+{
+    "type": "modal",
+    "title": {
+        "type": "plain_text",
+        "text": "Add Github Access Token"
+    },
+    "callback_id": "add_github_token",
+    "blocks": [
+        {
+            "type": "input",
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "token",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "Enter your Github Access Token"
+                }
+            },
+            "label": {
+                "type": "plain_text",
+                "text": "Token"
+            }
+        }
+    ],
+    "submit": {
+        "type": "plain_text",
+        "text": "Add"
+    }
+}
