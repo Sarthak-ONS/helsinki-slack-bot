@@ -5,9 +5,14 @@ const {
   renderSuccessView,
   CreateGithubRepoView,
   renderErrorview,
+  renderGithubRepoForDeletion,
 } = require("./views");
 const getFormattedCreateRepoModalValues = require("./utils/getFormattedCreateRepoModalValues");
-const { createGithubRespository } = require("./helpers");
+const {
+  createGithubRespository,
+  getUserGithubRepository,
+  deleteGithubRepository,
+} = require("./helpers");
 
 const { SIGNING_SECRET, OAUTH_BOT_TOKEN } = process.env;
 
@@ -17,7 +22,7 @@ const slackApp = new App({
   ignoreSelf: false,
 });
 
-slackApp.command("/gitcreate", async ({ command, ack, say, client, body }) => {
+slackApp.command("/gitcreate", async ({ command, ack, client, body }) => {
   await ack();
 
   await client.views.open({
@@ -67,6 +72,11 @@ slackApp.view("create_github_repo", async ({ ack, view, client, body }) => {
     token: process.env.GITHUB_TOKEN,
   })
     .then(async (res) => {
+      await client.chat.postMessage({
+        channel: body.user.id,
+        text: `Github Repository Created Successfully! \n ${res}`,
+      });
+
       const successView = renderSuccessView(
         `Github Repository Created Successfully! \n ${res}`
       );
@@ -88,8 +98,71 @@ slackApp.view("create_github_repo", async ({ ack, view, client, body }) => {
     });
 });
 
+// Render the Github Repo Deletion View on Surface
+slackApp.command("/gitdelete", async ({ command, ack, say, client, body }) => {
+  await ack();
+
+  const userRepos = await getUserGithubRepository({
+    token: process.env.GITHUB_TOKEN,
+  });
+
+  const view = renderGithubRepoForDeletion(userRepos);
+
+  await client.views.open({
+    trigger_id: body.trigger_id,
+    view,
+  });
+});
+
+// Handle the Github Repo Deletion
+slackApp.view("delete_github_repo", async ({ ack, view, client, body }) => {
+  await ack();
+
+  deleteGithubRepository({
+    name: view.state.values.repo_selection.repo_selection.selected_option.value,
+    token: process.env.GITHUB_TOKEN,
+    owner: view.state.values.username_selection.user_name.value,
+  })
+    .then((res) => {
+      client.chat.postMessage({
+        channel: body.user.id,
+        text: "Github Repository Deleted Successfully!",
+      });
+
+      const view = renderSuccessView(
+        `Github Repository Deleted Successfully! ${res}`
+      );
+
+      client.views.open({
+        trigger_id: body.trigger_id,
+        view,
+      });
+    })
+    .catch((err) => {
+      client.chat.postMessage({
+        channel: body.user.id,
+        text: `Failed to delete Github Repository \n ${err.message}`,
+      });
+
+      const view = renderErrorview(
+        `Failed to delete Github Repository \n ${err.message}`
+      );
+
+      client.views.open({
+        trigger_id: body.trigger_id,
+        view,
+      });
+    });
+
+  client.chat.postMessage({
+    channel: body.user.id,
+    text: "Github Repository Deleted Successfully!",
+  });
+  // Delete the Github Repository
+});
+
 slackApp.error((error) => {
-  console.error(error);
+  console.error(error.data);
 });
 
 module.exports = slackApp;
