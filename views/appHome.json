@@ -2,6 +2,17 @@
     "type": "home",
     "blocks": [
         {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": "Hi, I am helsinki",
+                "emoji": true
+            }
+        },
+        {
+            "type": "divider"
+        },
+        {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
@@ -17,6 +28,15 @@
                 "value": "click_me_123",
                 "action_id": "add_token_to_db"
             }
+        },
+        {
+            "type": "context",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": "Please refer to this [doc](https://docs.github.com/en/enterprise-server@3.9/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) for creating token "
+                }
+            ]
         }
     ]
 }
